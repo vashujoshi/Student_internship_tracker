@@ -1,34 +1,48 @@
+// src/components/Navbar.js
 import React from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    return (
-        <nav className="bg-blue-600 text-white p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="text-xl font-bold">Internship Tracker</Link>
-                
-                {/* Mobile Menu Button */}
-                <button 
-                    className="md:hidden text-white focus:outline-none" 
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    ☰
-                </button>
-
-                {/* Navigation Links */}
-                <div className={`md:flex md:items-center ${menuOpen ? "block" : "hidden"}`}>
-                    <Link to="/" className="px-3 py-2">Home</Link>
-                    <Link to="/dashboard" className="px-3 py-2">Dashboard</Link>
-                    <Link to="/data-entry" className="px-3 py-2">Data Entry</Link>
-                    <Link to="/table-view" className="px-3 py-2">Table View</Link>
-                    <Link to="/login" className="bg-green-500 px-4 py-2 rounded ml-2">Login</Link>
-                </div>
-            </div>
-        </nav>
-    );
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+      <div className="container">
+        <Link className="navbar-brand fw-bold primary text-white" to="/">
+          Internship Tracker
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link btn btn-primary text-white px-3" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">Dashboard</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link btn btn-primary text-white px-3" to="/data-entry">Data Entry</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link  btn btn-primary text-white px-3" to="/table-view">Table View</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link btn btn-primary text-white px-3" to="/login">Login</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
