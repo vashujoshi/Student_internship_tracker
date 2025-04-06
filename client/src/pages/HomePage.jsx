@@ -5,15 +5,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const HomePage = () => {
     return (
-        <div className="d-flex flex-column min-vh-100 bg-gradient-custom">
+        <div className="d-flex flex-column min-vh-100">
+            {/* Background Image (positioned absolutely behind content) */}
+            <div 
+              style={{
+                backgroundImage: `url('/src/assets/images/maxresdefault.jpg')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: -1
+              }}
+            ></div>
+            
             {/* Main Content */}
             <div className="container flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-                <div className="card shadow-lg rounded-4 text-center p-4 bg-white" style={{ maxWidth: "600px" }}>
+                <div className="card   rounded-4 text-center p-4" style={{ 
+                  maxWidth: "620px",
+                  backgroundColor: 'transparent'
+                }}>
                     <div className="card-body">
-                        <h1 className="display-4 fw-bold text-primary mb-3">
+                        <h1 className="display-4 fw-bold text-white mb-3"  >
                             Welcome to Internship Tracker
                         </h1>
-                        <p className="card-text text-muted mb-4">
+                        <p className="card-text text-white mb-4"   >
                             Effortlessly track and manage your internships. Stay organized and monitor your progress with ease.
                         </p>
                         <div className="d-flex justify-content-center gap-3">
