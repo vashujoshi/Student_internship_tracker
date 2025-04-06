@@ -7,6 +7,7 @@ import DashboardPage from "./pages/DashboardPage";
 import DataEntryPage from "./pages/Dataentrypage";
 // import TableViewPage from "./pages/TableViewPage";  // Uncomment when needed
 import LoginPage from "./pages/LoginPage";
+import TableViewPage from "./pages/TableViewPage";
 
 const AppRoutes = () => {
     return (
@@ -17,7 +18,7 @@ const AppRoutes = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="/data-entry" element={<DataEntryPage />} />
-                    {/* <Route path="/table-view" element={<TableViewPage />} /> */}  
+                    <Route path="/table-view" element={<TableViewPage/>} />  
                     <Route path="/login" element={<LoginPage />} />
                 </Routes>
             </div>

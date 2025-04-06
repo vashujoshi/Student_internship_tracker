@@ -17,10 +17,6 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  institution: {
-    type: String,
-    required: true
-  },
   yearOfGraduation: {
     type: String,
     required: true
@@ -31,6 +27,15 @@ const internshipSchema = new mongoose.Schema({
   },
   companyName: {
     type: String,
+    required: true
+  },
+  stipendPerMonth: {
+    type: Number,
+    required: true
+  },
+  location: {
+    type: String,
+    enum: ['Remote', 'Hybrid', 'Onsite'],
     required: true
   },
   responsibilities: {

@@ -7,10 +7,11 @@ const DataEntryPage = () => {
         email: '',
         phone: '',
         degree: '',
-        institution: '',
         gradYear: '',
         internshipTitle: '',
         companyName: '',
+        stipendPerMonth: '',
+        location: '',
         startDate: '',
         endDate: '',
         responsibilities: ''
@@ -34,10 +35,11 @@ const DataEntryPage = () => {
             emailAddress: formData.email,
             phoneNumber: formData.phone,
             degree: formData.degree,
-            institution: formData.institution,
             yearOfGraduation: formData.gradYear,
             internshipTitle: formData.internshipTitle,
             companyName: formData.companyName,
+            stipendPerMonth: formData.stipendPerMonth,
+            location: formData.location,
             responsibilities: formData.responsibilities,
             duration: {
                 from: formData.startDate,
@@ -93,10 +95,6 @@ const DataEntryPage = () => {
                                     </select>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="institution" className="form-label fw-bold">Institution</label>
-                                    <input type="text" className="form-control form-control-lg" id="institution" value={formData.institution} onChange={handleChange} required />
-                                </div>
-                                <div className="mb-3">
                                     <label htmlFor="gradYear" className="form-label fw-bold">Year of Graduation</label>
                                     <input type="number" className="form-control form-control-lg" id="gradYear" value={formData.gradYear} onChange={handleChange} required />
                                 </div>
@@ -116,7 +114,21 @@ const DataEntryPage = () => {
                                     <label htmlFor="companyName" className="form-label fw-bold">Company Name</label>
                                     <input type="text" className="form-control form-control-lg" id="companyName" value={formData.companyName} onChange={handleChange} required />
                                 </div>
+                                <div className="mb-3">
+                                    <label htmlFor="stipendPerMonth" className="form-label fw-bold">Stipend Per Month (₹)</label>
+                                    <input type="number" className="form-control form-control-lg" id="stipendPerMonth" value={formData.stipendPerMonth} onChange={handleChange} required />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="location" className="form-label fw-bold">Location</label>
+                                    <select className="form-select form-select-lg" id="location" value={formData.location} onChange={handleChange} required>
+                                        <option value="">Select location</option>
+                                        <option>Remote</option>
+                                        <option>Hybrid</option>
+                                        <option>Onsite</option>
+                                    </select>
+                                </div>
                             </div>
+
                             <div className="col-md-6">
                                 <div className="mb-3">
                                     <label htmlFor="startDate" className="form-label fw-bold">Duration</label>
