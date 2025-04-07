@@ -1,4 +1,4 @@
-# 🎓 Student Internship Tracker
+ # 🎓 Student Internship Tracker
 
 A full-stack web application designed to help colleges efficiently track internship and placement data for students. Built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js), it supports dynamic data entry, dashboard visualization, and public stats view.
 ![image](https://github.com/user-attachments/assets/b5d51fa9-aab6-45d9-9b9a-bbbd2c7f53f2)
