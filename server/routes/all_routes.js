@@ -5,7 +5,8 @@ const {
   getAllInternships,
   getInternshipById,
   deleteInternship,
-  updateInternship
+  updateInternship,
+  //getInternshipStats
 } = require('../controllers/all_controller');
 
 router.get('/', (req, res) => {
@@ -15,6 +16,7 @@ router.get('/', (req, res) => {
 // Route to handle form submission
 router.post('/submit', submitInternship);
 
+// router.get('/stats', getInternshipStats);
 // Get all student internship records
 router.get('/getAll', getAllInternships);
 

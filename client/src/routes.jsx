@@ -5,7 +5,6 @@ import Footer from "./components/common/Footer";
 import HomePage from "./pages/HomePage";
 import DashboardPage from "./pages/DashboardPage";
 import DataEntryPage from "./pages/Dataentrypage";
-// import TableViewPage from "./pages/TableViewPage";  // Uncomment when needed
 import LoginPage from "./pages/LoginPage";
 import TableViewPage from "./pages/TableViewPage";
 

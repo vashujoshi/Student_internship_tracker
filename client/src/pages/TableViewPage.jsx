@@ -1,34 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { DataContext } from '../context/DataContext';
 
 const TableViewPage = () => {
-  const [records, setRecords] = useState([]);
+  const { records, loading, error } = useContext(DataContext);
   const [filteredRecords, setFilteredRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [filters, setFilters] = useState({
     companyName: '',
     yearOfGraduation: '',
-    stipendSort: '' // 'asc' or 'desc'
+    stipendSort: ''
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get('http://localhost:3000/api/getALL');
-        setRecords(res.data);
-        setFilteredRecords(res.data);
-      } catch (err) {
-        setError('Failed to fetch data');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    setFilteredRecords(records);
+  }, [records]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +24,7 @@ const TableViewPage = () => {
 
     if (updatedFilters.companyName) {
       filtered = filtered.filter(record =>
-        record.companyName.toLowerCase().includes(updatedFilters.companyName.toLowerCase())
+        record.companyName?.toLowerCase().includes(updatedFilters.companyName.toLowerCase())
       );
     }
 

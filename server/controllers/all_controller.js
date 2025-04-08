@@ -63,4 +63,5 @@ module.exports = {
   getInternshipById,
   deleteInternship,
   updateInternship,
+  // getInternshipStats,
 };
