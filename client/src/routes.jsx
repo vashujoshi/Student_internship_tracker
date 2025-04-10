@@ -7,6 +7,7 @@ import DashboardPage from "./pages/DashboardPage";
 import DataEntryPage from "./pages/Dataentrypage";
 import LoginPage from "./pages/LoginPage";
 import TableViewPage from "./pages/TableViewPage";
+import RegisterPage from "./pages/RegisterPage";
 
 const AppRoutes = () => {
     return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
                     <Route path="/data-entry" element={<DataEntryPage />} />
                     <Route path="/table-view" element={<TableViewPage/>} />  
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
                 </Routes>
             </div>
             <Footer />

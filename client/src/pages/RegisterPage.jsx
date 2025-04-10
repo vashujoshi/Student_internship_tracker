@@ -1,13 +1,12 @@
-// src/pages/LoginPage.jsx
+// src/pages/RegisterPage.jsx
 
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
-import RegisterPage from "./RegisterPage";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -17,21 +16,22 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", { email, password });
+      const response = await axios.post("http://localhost:3000/api/auth/register", { email, password });
 
-      if (response.data.token) {
+      if (response.data.success) {
+        // Automatically log in the user after registration
         login(response.data.token, response.data.user.role);
         navigate("/dashboard");
       }
     } catch (error) {
-      console.error("Login failed:", error);
-      alert("Invalid credentials");
+      console.error("Registration failed:", error);
+      alert("Registration failed");
     }
   };
 
   return (
     <div className="container">
-      <h2>Login</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email</label>
@@ -53,18 +53,10 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
-        <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={() => navigate("/register")}>
-  Register
-</button>
-
-        
+        <button type="submit" className="btn btn-primary">Register</button>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

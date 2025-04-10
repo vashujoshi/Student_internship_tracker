@@ -1,0 +1,14 @@
+✅ Approach 1 — Using Mongoose pre('save') hook (your current approach):
+You let the model handle hashing when you call .save() or .create():
+const userSchema = new mongoose.Schema({ ... });
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next(); // skip if password hasn't changed
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+Bearer Token	Just a way to send the JWT token in HTTP headers
+Auth Flow	Login → get token → store it → send it with every request
+JWT Secret	Your backend's private key used to sign and verify the token
