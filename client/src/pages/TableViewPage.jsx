@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DataContext } from '../context/DataContext';
+import * as XLSX from 'xlsx'; // Import the xlsx library
 
 const TableViewPage = () => {
   const { records, loading, error } = useContext(DataContext);
@@ -43,11 +44,40 @@ const TableViewPage = () => {
     setFilteredRecords(filtered);
   };
 
+  const downloadExcel = () => {
+    // Preprocess the data to include all required fields
+    const processedData = filteredRecords.map(record => ({
+      StudentName: record.studentName || '',
+      EmailAddress: record.emailAddress || '',
+      PhoneNumber: record.phoneNumber || '',
+      Degree: record.degree || '',
+      YearOfGraduation: record.yearOfGraduation || '',
+      InternshipTitle: record.internshipTitle || '',
+      CompanyName: record.companyName || '',
+      StipendPerMonth: record.stipendPerMonth || '',
+      Location: record.location || '',
+      Responsibilities: record.responsibilities || '',
+      DurationFrom: record.duration?.from ? new Date(record.duration.from).toLocaleDateString() : '',
+      DurationTo: record.duration?.to ? new Date(record.duration.to).toLocaleDateString() : ''
+    }));
+
+    // Convert the processed data to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(processedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Internship Records');
+
+    // Download the Excel file
+    XLSX.writeFile(workbook, 'Internship_Records.xlsx');
+  };
+
   return (
     <div className="container mt-5">
       <div className="card shadow">
-        <div className="card-header bg-success text-white">
-          <h2 className="text-center mb-0">Internship Records</h2>
+        <div className="card-header bg-success text-white d-flex justify-content-between align-items-center">
+          <h2 className="mb-0">Internship Records</h2>
+          <button className="btn btn-light" onClick={downloadExcel}>
+            Download Excel
+          </button>
         </div>
         <div className="card-body">
 

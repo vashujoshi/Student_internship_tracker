@@ -1,6 +1,4 @@
-// src/components/common/Navbar.jsx
-
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -50,7 +48,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link btn btn-primary text-white px-3" to="/table-view">
-                Table View
+                Students Data
               </Link>
             </li>
 
