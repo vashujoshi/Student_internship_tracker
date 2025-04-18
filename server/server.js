@@ -4,7 +4,9 @@ const connectDB = require('./db/conn');
 const formRoutes = require('./routes/all_routes');
 const authRoutes = require('./routes/auth_routes');
 const protected=require('./routes/protected/ccpd-dashboard');
+const otproutes = require('./routes/otp_routes');
 const cors = require('cors');
+const otp = require('./models/otp');
 
 connectDB(); // Connect to MongoDB
 
@@ -17,6 +19,7 @@ app.use(cors()); // Enable CORS for all routes
 app.use('/api', formRoutes);
 app.use('/api/auth', authRoutes); // Auth routes
 app.use('/api/protected', protected); // Protected routes
+app.use('/api/otp',otproutes); // OTP routes
 
 
 const port=process.env.PORT || 3000;
