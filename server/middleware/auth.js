@@ -17,12 +17,12 @@ const protect = async (req, res, next) => {
   }
 };
 
-const ccpdOnly = (req, res, next) => {
-  if (req.user && req.user.role === 'ccpd_admin') {
+const Mentor_only = (req, res, next) => {
+  if (req.user && req.user.role === 'mentor_admin') {
     next();
   } else {
-    res.status(403).json({ message: 'CCPD Admins only' });
+    res.status(403).json({ message: 'mentor Admins only' });
   }
 };
 
-module.exports = { protect, ccpdOnly }; // ✅ Correct export
+module.exports = { protect, Mentor_only }; 

@@ -50,8 +50,20 @@ const internshipSchema = new mongoose.Schema({
     to: {
       type: Date,
       required: true
+    },
+  },
+    mentorName: {
+      type: String,
+      required: true
+    },
+    mentorEmail: {
+      type: String,
+      required: true
+    },
+    isApproved: {
+      type: Boolean,
+      default: false
     }
-  }
 });
 
 const InternshipModel = mongoose.model('Internship', internshipSchema);

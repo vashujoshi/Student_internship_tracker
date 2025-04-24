@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import MentorDropdown from './../components/Mentor_dropdown';
 
 const DataEntryPage = () => {
     const initialFormData = {
@@ -14,7 +15,8 @@ const DataEntryPage = () => {
         location: '',
         startDate: '',
         endDate: '',
-        responsibilities: ''
+        responsibilities: '',
+        mentorEmail: '', 
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -22,6 +24,10 @@ const DataEntryPage = () => {
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
+    };
+
+    const handleMentorChange = (value) => {
+        setFormData({ ...formData, mentorEmail: value });
     };
 
     const resetForm = () => {
@@ -44,12 +50,13 @@ const DataEntryPage = () => {
             duration: {
                 from: formData.startDate,
                 to: formData.endDate
-            }
+            },
+            mentorEmail: formData.mentorEmail, // NEW
         };
 
         try {
             const res = await axios.post('http://localhost:3000/api/submit', payload);
-            alert("Submitted Successfully!");
+            alert("Submitted Successfully! Sent to mentor for approval.");
             console.log(res.data);
             resetForm();
         } catch (error) {
@@ -80,6 +87,10 @@ const DataEntryPage = () => {
                                 <div className="mb-3">
                                     <label htmlFor="phone" className="form-label fw-bold">Phone Number</label>
                                     <input type="tel" className="form-control form-control-lg" id="phone" value={formData.phone} onChange={handleChange} required />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="mentorEmail" className="form-label fw-bold">Select Mentor</label>
+                                    <MentorDropdown value={formData.mentorEmail} onChange={handleMentorChange} />
                                 </div>
                             </div>
 
