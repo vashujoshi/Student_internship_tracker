@@ -1,4 +1,6 @@
 const Otp = require('../models/otp');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
 
@@ -16,7 +18,7 @@ exports.sendOtp = async (req, res) => {
     await Otp.create({
       email,
       otp,
-      expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 mins expiry
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000) // 15 mins expiry
     });
 
     const transporter = nodemailer.createTransport({
@@ -48,6 +50,7 @@ exports.sendOtp = async (req, res) => {
 exports.verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
+
     const existing = await Otp.findOne({ email, otp });
 
     if (!existing) {
@@ -60,7 +63,23 @@ exports.verifyOtp = async (req, res) => {
 
     await Otp.deleteMany({ email }); // Remove all old OTPs for that user
 
-    res.json({ message: "OTP verified successfully" });
+    // ✅ Find or Create User
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create a user with the default role defined in the schema
+      user = await User.create({ email });
+    }
+
+    // ✅ Generate JWT token
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '500d' }
+    );
+
+    // ✅ Respond with token
+    res.json({ message: "OTP verified successfully", token, role: user.role });
 
   } catch (err) {
     console.error("OTP verification error:", err);

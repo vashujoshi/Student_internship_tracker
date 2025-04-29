@@ -54,7 +54,7 @@ const internshipSchema = new mongoose.Schema({
   },
     mentorName: {
       type: String,
-      required: true
+      // required: true
     },
     mentorEmail: {
       type: String,
