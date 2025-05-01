@@ -29,7 +29,6 @@ A full-stack web application designed to help colleges efficiently track interns
 
 ## 📷 Screenshots
 
-> _(Add screenshots here by uploading to GitHub or using image URLs)_
 
 - **Dashboard Page**
 - **Data Entry Form**
