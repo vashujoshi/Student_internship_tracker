@@ -64,7 +64,7 @@ const DataEntryPage = () => {
 
     try {
       console.log("Payload being sent:", payload);
-      const res = await axios.post("http://localhost:3000/api/submit", payload);
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/submit`, payload);
       alert("Submitted Successfully! Sent to mentor for approval.");
       console.log(res.data);
       resetForm();

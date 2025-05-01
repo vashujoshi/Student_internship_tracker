@@ -11,7 +11,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/getALL');
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/getALL`);
         setRecords(res.data);
       } catch (err) {
         setError('Failed to fetch data');
