@@ -9,7 +9,7 @@ const HomePage = () => {
             {/* Background Image (positioned absolutely behind content) */}
             <div 
               style={{
-                backgroundImage: `url('/src/assets/images/maxresdefault.jpg')`,
+                backgroundImage: `url('src\assets\maxresdefault.jpg')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 position: 'fixed',
