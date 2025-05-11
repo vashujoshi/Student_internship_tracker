@@ -12,7 +12,8 @@ const OtpAuthPage = () => {
 
   const sendOtp = async () => {
     try {
-      const res = await axios.post("`${process.env.REACT_APP_API_BASE_URL}/api/otp/send-otp`", { email });
+      const res = await axios.post("http://localhost:3000/api/otp/send-otp", { email });
+      // const res = await axios.post("`${process.env.REACT_APP_API_BASE_URL}/api/otp/send-otp`", { email });
       alert("OTP sent to your college email.");
       setStep(2);
     } catch (err) {
@@ -22,8 +23,8 @@ const OtpAuthPage = () => {
 
   const verifyOtp = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/otp/verify-otp`, { email, otp });
-
+      // const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/otp/verify-otp`, { email, otp });
+      const res = await axios.post("http://localhost:3000/api/otp/verify-otp", { email, otp });
       // Optional: You can generate a token in backend and return it here
       login("dummy_token", "student"); // Replace with real token
       alert("OTP Verified. Redirecting...");

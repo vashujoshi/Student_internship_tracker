@@ -14,7 +14,8 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/register`, { email, password });
+      const response = await axios.post("http://localhost:3000/api/auth/register", { email, password });
+      // const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/register`, { email, password });
 
       if (response.data.success) {
         // Automatically log in the user after registration
