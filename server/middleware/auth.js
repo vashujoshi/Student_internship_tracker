@@ -13,7 +13,7 @@ const protect = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid or expired token' });
     }
   } else {
-    return res.status(401).json({ message: 'No token provided' });
+    return res.status(401).json({ message: 'No token is provided' });
   }
 };
 
