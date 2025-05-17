@@ -16,6 +16,8 @@ const submitInternship = async (req, res) => {
     }
 
     // Step 2: Generate PDF
+    // formData.duration = `${formData.duration.from} to ${formData.duration.to}`;
+
     let pdfPath;
     try {
       const filename = `internship-${uuidv4()}.pdf`;

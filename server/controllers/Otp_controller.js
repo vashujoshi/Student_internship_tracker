@@ -9,7 +9,7 @@ exports.sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (!email.endsWith('@abes.ac.in')) {
+    if (!email.endsWith('.com')) {
       return res.status(400).json({ message: "Only ABES email allowed" });
     }
 

@@ -42,7 +42,7 @@ const mongoose = require('mongoose');
 // models/User.js
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
-  role: { type: String, enum: ['student', 'mentor_admin'], required: true },
+  role: { type: String, enum: ['student', 'mentor_admin'], required: true, default: 'student' },
 });
 
 module.exports =mongoose.model('User', userSchema);

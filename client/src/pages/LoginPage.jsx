@@ -1,5 +1,5 @@
   import React, { useState, useContext } from "react";
-  import axios from "axios";
+  import axiosInstance from "../api/axiosInstance";
   import { useNavigate } from "react-router-dom";
   import { AuthContext } from "../context/AuthContext";
 
@@ -11,30 +11,28 @@
     const navigate = useNavigate();
 
     const sendOtp = async () => {
-      try {
-        const res = await axios.post("http://localhost:3000/api/otp/send-otp", { email });
-        // const res = await axios.post("`${process.env.REACT_APP_API_BASE_URL}/api/otp/send-otp`", { email });
-        alert("OTP sent to your college email.");
-        setStep(2);
-      } catch (err) {
-        alert(err.response?.data?.message || "Failed to send OTP.");
-      }
-    };
+    try {
+      // USE OUR INSTANCE
+      const res = await axiosInstance.post("/api/otp/send-otp", { email });
+      alert("OTP sent to your college email.");
+      setStep(2);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to send OTP.");
+    }
+  };
 
-    const verifyOtp = async () => {
-      try {
-        // const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/otp/verify-otp`, { email, otp });
-        const res = await axios.post("http://localhost:3000/api/otp/verify-otp", { email, otp });
-        // Optional: You can generate a token in backend and return it here
-        const {token,role}=res.data;
-        login(token,role);
-        alert("OTP Verified. Redirecting...");
-        navigate("/dashboard");
-
-      } catch (err) {
-        alert(err.response?.data?.message || "Invalid OTP.");
-      }
-    };
+  const verifyOtp = async () => {
+    try {
+      // USE OUR INSTANCE
+      const res = await axiosInstance.post("/api/otp/verify-otp", { email, otp });
+      const { token, role } = res.data;
+      login(token, role); // This comes from AuthContext
+      alert("OTP Verified. Redirecting...");
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Invalid OTP.");
+    }
+  };
 
     return (
       <div className="container d-flex justify-content-center align-items-center vh-100">

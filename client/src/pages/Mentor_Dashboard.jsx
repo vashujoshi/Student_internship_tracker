@@ -1,117 +1,48 @@
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// const MentorDashboard = () => {
-//   const [requests, setRequests] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   const fetchRequests = async () => {
-//     try {
-//       const res = await axios.get('/api/mentor/pending-requests', {
-//         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-//       });
-//       setRequests(res.data);
-//     } catch (err) {
-//       console.error('Failed to fetch requests', err);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const approveRequest = async (id) => {
-//     try {
-//       await axios.put(`/api/mentor/approve/${id}`, {}, {
-//         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-//       });
-//       fetchRequests(); // Refresh list after approval
-//     } catch (err) {
-//       console.error('Failed to approve request', err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchRequests();
-//   }, []);
-
-//   if (loading) return <p>Loading...</p>;
-
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-xl font-bold mb-4">Pending Internship Approvals</h2>
-//       {requests.length === 0 ? (
-//         <p>No pending requests.</p>
-//       ) : (
-//         <ul className="space-y-4">
-//           {requests.map(req => (
-//             <li key={req._id} className="border p-4 rounded shadow">
-//               <p><strong>Student:</strong> {req.studentName}</p>
-//               <p><strong>Email:</strong> {req.emailAddress}</p>
-//               <p><strong>Company:</strong> {req.companyName}</p>
-//               <button
-//                 onClick={() => approveRequest(req._id)}
-//                 className="mt-2 bg-green-600 text-white px-4 py-1 rounded"
-//               >
-//                 Approve
-//               </button>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default MentorDashboard;
-// client/src/pages/MentorDashboardPage.jsx
-
-
-// --------
-import { useEffect, useState,useContext } from 'react';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import React from "react";
+import { useEffect, useState, useContext } from "react";
+import axiosInstance from "../api/axiosInstance";
+import { AuthContext } from "../context/AuthContext";
 
 // const {user}=useContext(AuthContext);
 // const token = user?.token;
 
-
 const MentorDashboardPage = () => {
   const [internships, setInternships] = useState([]);
-
-   console.log("Token being sent:", token);
+  // const { user } = useContext(AuthContext); // Example if you need user info
 
   const fetchPending = async () => {
-    const token = sessionStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:3000/api/protected/mentor-dashboard', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // USE OUR INSTANCE - headers will be added automatically
+      const res = await axiosInstance.get("/api/protected/mentor-dashboard");
       setInternships(res.data.internships);
     } catch (err) {
-      console.error('Error fetching internships:', err);
+      console.error("Error fetching internships:", err);
+      // Consider more specific error handling, e.g., if err.response.status === 401 or 403
     }
   };
 
   const handleApprove = async (id) => {
-    const token = sessionStorage.getItem('token');
+
     try {
-      await axios.post(`/api/protected/approve/${id}`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // USE OUR INSTANCE
+      await axiosInstance.post(`/api/protected/approve/${id}`, {}); // Empty payload as before
+      // Optimistic update or re-fetch:
       setInternships((prev) => prev.filter((i) => i._id !== id));
+      // OR call fetchPending() again if you prefer
     } catch (err) {
-      console.error('Approval failed:', err);
+      console.error("Approval failed:", err);
     }
   };
 
   const handleReject = async (id) => {
-    const token = sessionStorage.getItem('token');
+    // const token = sessionStorage.getItem('token'); // NO LONGER NEEDED HERE
     try {
-      await axios.delete(`/api/protected/reject/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // USE OUR INSTANCE
+      await axiosInstance.delete(`/api/protected/reject/${id}`);
+      // Optimistic update or re-fetch:
       setInternships((prev) => prev.filter((i) => i._id !== id));
     } catch (err) {
-      console.error('Rejection failed:', err);
+      console.error("Rejection failed:", err);
     }
   };
 
@@ -127,13 +58,46 @@ const MentorDashboardPage = () => {
       ) : (
         internships.map((data) => (
           <div key={data._id} className="border p-4 mb-3 rounded shadow">
-            <p><strong>Student:</strong> {data.studentName}</p>
-            <p><strong>Email:</strong> {data.emailAddress}</p>
-            <p><strong>Company:</strong> {data.companyName}</p>
-            <button onClick={() => handleApprove(data._id)} className="bg-green-500 text-white px-3 py-1 rounded mr-2">
+            <p>
+              <strong>Student:</strong> {data.studentName}
+            </p>
+            <p>
+              <strong>Email:</strong> {data.emailAddress}
+            </p>
+            <p>
+              <strong>Company:</strong> {data.companyName}
+            </p>
+            <p><strong>To be approved by:</strong>{data.mentorEmail}</p>
+            <button
+              onClick={() => handleApprove(data._id)}
+              style={{
+                backgroundColor: "#4CAF50",
+                color: "white",
+                padding: "10px 16px",
+                borderRadius: "5px",
+                marginRight: "10px",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+            >
               Approve
             </button>
-            <button onClick={() => handleReject(data._id)} className="bg-red-500 text-white px-3 py-1 rounded">
+
+            <button
+              onClick={() => handleReject(data._id)}
+              style={{
+                backgroundColor: "#f44336",
+                color: "white",
+                padding: "10px 16px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.target.style.backgroundColor = "#d32f2f")}
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#f44336")}
+            >
               Reject
             </button>
           </div>

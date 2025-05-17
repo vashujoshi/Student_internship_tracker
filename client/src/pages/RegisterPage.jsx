@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
@@ -12,19 +12,16 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/register", { email, password });
-      // const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/auth/register`, { email, password });
-
+      // USE OUR INSTANCE
+      const response = await axiosInstance.post("/api/auth/register", { email, password });
       if (response.data.success) {
-        // Automatically log in the user after registration
         login(response.data.token, response.data.user.role);
         navigate("/dashboard");
       }
     } catch (error) {
       console.error("Registration failed:", error);
-      alert("Registration failed");
+      alert(error.response?.data?.message || "Registration failed");
     }
   };
 

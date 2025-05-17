@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from '../api/axiosInstance';
 const mentors = [
     { name: "Dr. Vaibhav joshi", email: "vaibhav.22b0101022@abes.ac.in" },
     { name: "tanya", email: "tanya.22b010101177@abes.ac.in" },
-    { name: "Ms. Pooja Verma", email: "pooja.verma@college.edu" }
+    { name: "Ms. Pooja Verma", email: "pooja.verma@college.edu" },
   ];
 const DataEntryPage = () => {
   const initialFormData = {
@@ -63,15 +63,19 @@ const DataEntryPage = () => {
     };
 
     try {
-      console.log("Payload being sent:", payload);
-      const res = await axios.post("http://localhost:3000/api/submit", payload);
-      // const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/submit`, payload);
+      const res = await axiosInstance.post("/api/submit", payload);
+      // If your baseURL in axiosInstance.js is 'http://localhost:3000/api', then use:
+      // const res = await axiosInstance.post("/submit", payload);
+      // If your baseURL in axiosInstance.js is 'http://localhost:3000', then use:
+      // const res = await axiosInstance.post("/api/submit", payload); // Correct
+
       alert("Submitted Successfully! Sent to mentor for approval.");
       console.log(res.data);
       resetForm();
     } catch (error) {
       console.error(error);
-      alert("Submission failed. Please check the console.");
+      // You might want to check error.response.data for backend error messages
+      alert(error.response?.data?.message || "Submission failed. Please check the console.");
     }
   };
 
@@ -124,6 +128,8 @@ const DataEntryPage = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
+                    pattern="[0-9]{10}"
+                    title="Please enter a valid 10-digit phone number"
                   />
                 </div>
                 <div className="mb-3">
