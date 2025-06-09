@@ -3,7 +3,7 @@ const router = express.Router();
 const { protect, Mentor_only } = require('../../middleware/auth');
 const Internship = require('../../models/allmodels'); // your schema file
 
-// ✅ Mentor dashboard route to get pending internships
+// Mentor dashboard route to get pending internships
 router.get('/mentor-dashboard', protect, Mentor_only, async (req, res) => {
   try {
     // Fetch all internships where isApproved is false
@@ -15,7 +15,7 @@ router.get('/mentor-dashboard', protect, Mentor_only, async (req, res) => {
   }
 });
 
-// ✅ Mentor approves a student's internship
+// Mentor approves a student's internship
 router.post('/approve/:internshipId', protect, Mentor_only, async (req, res) => {
   try {
     const { internshipId } = req.params;
@@ -36,7 +36,7 @@ router.post('/approve/:internshipId', protect, Mentor_only, async (req, res) => 
   }
 });
 
-// (Optional) ✅ Mentor rejects a student's internship (deletes entry)
+//  Mentor rejects a student's internship (deletes entry)
 router.delete('/reject/:internshipId', protect, Mentor_only, async (req, res) => {
   try {
     const { internshipId } = req.params;

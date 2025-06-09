@@ -48,7 +48,7 @@ const submitInternship = async (req, res) => {
       return res.status(500).json({ error: 'Failed to save internship data to database', details: err.message });
     }
 
-    // Step 5 (Optional): Delete the PDF file after sending
+    // Step 5 Delete the PDF file after sending
     try {
       fs.unlink(pdfPath, (err) => {
         if (err) console.error('Error deleting PDF:', err);
