@@ -64,7 +64,7 @@ const internshipSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     }
-});
+}, { timestamps: true });
 
 const InternshipModel = mongoose.model('Internship', internshipSchema);
 
